@@ -75,9 +75,9 @@ class Node:
             else:
                 self.right.add(data)
 
-    def fintMin(self):
+    def findMin(self):
         if self.left:
-            return self.left.fintMin()
+            return self.left.findMin()
         return self.data
 
     def delete(self, target):
@@ -85,7 +85,7 @@ class Node:
             # Do the deletion here
             if self.left and self.right:
                 # RTFM
-                minValue = self.right.fintMin()
+                minValue = self.right.findMin()
                 self.data = minValue
                 self.right = self.right.delete(minValue)
                 return self
