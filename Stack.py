@@ -9,10 +9,13 @@ class Stack:
         return self.stack.is_empty()
 
     def push(self, element):
-        self.stack.last_in(element)
+        self.stack.insert_head(element)
 
     def pop(self):
-        return self.stack.first_out()
+        return self.stack.delete_head()
+
+    def reverse(self):
+        return self.stack.reverse()
 
     def print_stack(self):
         self.stack.print_list()
@@ -39,7 +42,7 @@ class StackList:
 
 
 def use_stack():
-    s = StackList()
+    s = Stack()
     s.push(1)
     s.push(2)
     s.push(3)
@@ -47,9 +50,7 @@ def use_stack():
     s.push(5)
     s.print_stack()
     s.pop()
-    s.pop()
     s.print_stack()
-    print(s.is_empty())
 
 
 if __name__ == "__main__":

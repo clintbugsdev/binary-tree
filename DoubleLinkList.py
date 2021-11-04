@@ -1,10 +1,11 @@
 class Node:
-    def __init__(self, element=None, next_node=None):
+    def __init__(self, element=None):
         self.element = element
-        self.next_node = next_node
+        self.next_node = None
+        self.prev_node = None
 
 
-class LinkedList:
+class DoubleLinkList:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -20,6 +21,7 @@ class LinkedList:
         if self.is_empty():
             self.head = self.tail = n
         else:
+            self.head.prev_node = n
             n.next_node = self.head
             self.head = n
 
@@ -28,6 +30,7 @@ class LinkedList:
         if self.is_empty():
             self.head = self.tail = n
         else:
+            n.prev_node = self.tail
             self.tail.next_node = n
             self.tail = n
 
@@ -40,18 +43,9 @@ class LinkedList:
                 self.head = self.tail = None
             else:
                 self.head = n.next_node
+                self.head.prev_node = None
                 n.next_node = None
             return n.element
-
-    def reverse(self):
-        prev = None
-        current = self.head
-        while current is not None:
-            next = current.next_node
-            current.next_node = prev
-            prev = current
-            current = next
-        self.head = prev
 
     def print_list(self):
         n = self.head
@@ -60,24 +54,29 @@ class LinkedList:
             print(n.element, " ", end="")
             n = n.next_node
         print("]")
+        print("[", end="")
+        m = self.tail
+        while m is not None:
+            print(m.element, " ", end="")
+            m = m.prev_node
+        print("]")
 
 
-def linked_list():
-    ll = LinkedList()
-    ll.insert_head(1)
-    ll.insert_head(2)
-    ll.insert_head(3)
-    ll.insert_head(4)
-    ll.insert_head(5)
-    ll.print_list()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.print_list()
+def double_linked_list():
+    dll = DoubleLinkList()
+    dll.insert_tail(1)
+    dll.insert_tail(2)
+    dll.insert_tail(3)
+    dll.insert_tail(4)
+    dll.insert_tail(5)
+    dll.delete_head()
+    dll.delete_head()
+    dll.delete_head()
+    dll.delete_head()
+    dll.delete_head()
+    dll.delete_head()
+    dll.print_list()
 
 
 if __name__ == "__main__":
-    linked_list()
+    double_linked_list()
