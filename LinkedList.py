@@ -1,83 +1,89 @@
 class Node:
-    def __init__(self, element=None, next_node=None):
-        self.element = element
-        self.next_node = next_node
+    def __init__(self, data=None):
+        self.data = data
+        self.next_node = None
 
 
 class LinkedList:
     def __init__(self):
         self.head = None
-        self.tail = None
+        self.num_of_nodes = 0
 
-    def is_empty(self):
+    # 0(1) time complexity
+    def insert_start(self, data):
+        new_node = Node(data)
+
         if self.head is None:
-            return True
+            self.head = new_node
         else:
-            return False
+            new_node.next_node = self.head
+            self.head = new_node
 
-    def insert_head(self, element):
-        n = Node(element)
-        if self.is_empty():
-            self.head = self.tail = n
-        else:
-            n.next_node = self.head
-            self.head = n
+        self.num_of_nodes += 1
 
-    def insert_tail(self, element):
-        n = Node(element)
-        if self.is_empty():
-            self.head = self.tail = n
-        else:
-            self.tail.next_node = n
-            self.tail = n
+    # linear running time 0(N) complexity
+    def insert_end(self, data):
+        new_node = Node(data)
 
-    def delete_head(self):
-        if self.is_empty():
+        actual_node = self.head
+
+        while actual_node.next_node is not None:
+            actual_node = actual_node.next_node
+
+        actual_node.next_node = new_node
+
+        self.num_of_nodes += 1
+
+    def size_of_list(self):
+        return self.num_of_nodes
+
+    # linear running time 0(N) complexity
+    def traverse(self):
+
+        actual_node = self.head
+
+        while actual_node is not None:
+            print(actual_node.data)
+            actual_node = actual_node.next_node
+
+    def remove(self, data):
+
+        if self.head is None:
             return
-        else:
-            n = self.head
-            if self.head == self.tail:
-                self.head = self.tail = None
+
+        actual_node = self.head
+        previous_node = None
+
+        while actual_node is not None:
+            if actual_node.data == data:
+                break
             else:
-                self.head = n.next_node
-                n.next_node = None
-            return n.element
+                previous_node = actual_node
+                actual_node = actual_node.next_node
 
-    def reverse(self):
-        prev = None
-        current = self.head
-        while current is not None:
-            next = current.next_node
-            current.next_node = prev
-            prev = current
-            current = next
-        self.head = prev
+        # search missed - the item is not present
+        if actual_node is None:
+            return
 
-    def print_list(self):
-        n = self.head
-        print("[", end="")
-        while n is not None:
-            print(n.element, " ", end="")
-            n = n.next_node
-        print("]")
+        # usually if the data was in the head node
+        if previous_node is None:
+            self.head = actual_node.next_node
+        else:
+            previous_node.next_node = actual_node.next_node
 
-
-def linked_list():
-    ll = LinkedList()
-    ll.insert_head(1)
-    ll.insert_head(2)
-    ll.insert_head(3)
-    ll.insert_head(4)
-    ll.insert_head(5)
-    ll.print_list()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.delete_head()
-    ll.print_list()
+        # decrease number of nodes
+        self.num_of_nodes -= 1
 
 
 if __name__ == "__main__":
-    linked_list()
+    ll = LinkedList()
+    ll.insert_start(1)
+    ll.insert_start(2)
+    ll.insert_start(3)
+    ll.insert_start(4)
+    ll.traverse()
+    ll.remove(4)
+    print("----")
+    ll.traverse()
+    print("----")
+    print(ll.size_of_list())

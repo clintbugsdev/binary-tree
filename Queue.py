@@ -43,15 +43,15 @@ class QueueList:
 
 def reverse_linked_list():
     ll = LinkedList()
-    ll.insert_first(30)
-    ll.insert_first(4)
-    ll.insert_first(13)
-    ll.insert_first(3)
-    ll.insert_first(5)
+    ll.insert_head(30)
+    ll.insert_head(4)
+    ll.insert_head(13)
+    ll.insert_head(3)
+    ll.insert_head(5)
     ll.print_list()
     ll2 = LinkedList()
     while not ll.is_empty():
-        ll2.insert_first(ll.delete_first())
+        ll2.insert_head(ll.delete_head())
     ll2.print_list()
 
 
